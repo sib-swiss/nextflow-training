@@ -1,0 +1,77 @@
+site_name: Nextflow in Action Build Smarter, Faster, Reproducible Pipelines
+nav:
+    - Home: index.md
+    - Precourse preparations: precourse.md
+    - Course schedule: course_schedule.md
+    - Course material:
+      - General guidelines: course_material/1_guidelines.md
+      - Introduction to Nextflow: course_material/2_introduction_nextflow.md
+      - Making a more general-purpose Nextflow workflow: course_material/3_generalising_nextflow.md
+      - Decorating and optimising a Nextflow workflow: course_material/4_optimising_nextflow.md
+      - Being reproducible with Nextflow: course_material/5_reproducibility_nextflow.md
+      - Running Nextflow in an HPC environment: course_material/6_hpc_nextflow.md
+      - Additional concepts and workflow design/debugging: course_material/7_debugging_nextflow.md
+
+theme:
+  name: material
+  logo: assets/images/SIB_logo.svg
+  favicon: assets/images/SIB_logo.svg
+  custom_dir: overrides
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - announce.dismiss
+    - content.code.copy
+    - navigation.top
+    - navigation.footer
+
+extra:
+  version:
+    provider: mike
+  consent:
+    title: Cookie consent
+    description: >- 
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our trainig material and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our training material better.
+    cookies:
+      matomo: Matomo Analytics
+
+copyright: >
+  Copyright &copy; 2021-2026 SIB Swiss Institute of Bioinformatics -
+  <a href="#__consent">Change cookie settings</a>
+
+# Repository
+repo_name: jeffe107/nextflow-training
+repo_url: https://github.com/jeffe107/nextflow-training
+
+markdown_extensions:
+  - abbr
+  - def_list
+  - footnotes
+  - tables
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - sane_lists
+  - smarty
+  - toc
+  - pymdownx.superfences
+  - md_in_html
+  - attr_list
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      options:
+        custom_icons:
+          - overrides/.icons
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/consent.js
