@@ -4,10 +4,10 @@
 
 **After having completed this chapter you will be able to:**
 
-* Understand the structure of a Nextflow DSL2 workflow
-* Write processes and workflow definitions to produce the desired outputs
-* Chain processes together using channels
-* Run a Nextflow workflow
+* Understand the structure of a Nextflow DSL2 workflow.
+* Write processes and workflow definitions to produce the desired outputs.
+* Chain processes together using channels.
+* Run a Nextflow workflow.
 
 ## Material
 
@@ -15,11 +15,20 @@
 
 ## Structuring a workflow
 
-It is advised to implement your code in a directory called `workflow` (you will learn more about workflow structure in the [next series of exercises](3_generalising_snakemake.md#downloading-data-and-setting-up-folder-structure)). Filenames and locations are up to you, but we recommend that you at least group all workflow outputs in a `results` folder.
+We will have a folder for each exercise to maintain the file structure neat and clean. Throughout the exercises we will use always `results` as the output folder within each exercise directory.
 
-## Exercises
+## Exercise
 
-This series of exercises will bear no biological meaning, on purpose: it is designed to explain the fundamentals of Nextflow.
+Let's go then to the to first exercise:
+
+```bash
+cd exercises/intro_nextflow
+code .
+```
+
+This folder is empty as in this exercise we will build everything from the ground up. For the following exercises, we will provide the materials and/or templates.
+
+This exercise will bear no biological meaning, it is designed to explain the fundamentals of Nextflow.
 
 ### Creating a basic process
 
@@ -37,19 +46,18 @@ Other directives will be explained throughout the course.
 ```groovy linenums="1"
 process hello_world {
     output:
-        path 'results/hello.txt'
+        path 'hello.txt'
     script:
         '''
-        mkdir -p results
-        echo "Hello world!" > results/hello.txt
+        echo "Hello world!" > hello.txt
         '''
 }
 ```
 
 ??? success "Answer"
-    This process uses the `echo` shell command to print `Hello world!` in an **output file** called `hello.txt`, located in the `results` folder.
+    This process uses the `echo` shell command to print `Hello world!` in an **output file** called `hello.txt`.
 
-Processes are defined in a file typically named `main.nf` (or `workflow.nf`). This file should be located at the workflow root directory (here, `workflow/main.nf`). You also need a **workflow** block that invokes your processes—otherwise Nextflow will not run anything.
+You also need a **workflow** block that invokes your processes—otherwise Nextflow will not run anything.
 
 ```groovy linenums="1"
 workflow {
@@ -61,72 +69,110 @@ workflow {
 
 It is now time to execute your first workflow! Nextflow runs the workflow defined in the `workflow` block. By default, it executes all processes that are called from that block.
 
-**Exercise:** Create a `main.nf` file with the `hello_world` process and the `workflow` block above. Then, execute the workflow with `nextflow run main.nf`. Where can you locate the output file?
+**Exercise:** Create a `hello_world.nf` file with the `hello_world` process and the `workflow` block below. Then, execute the workflow with `nextflow run hello_world.nf`. Where can you locate the output file? Explore the directory.
 
-??? info "Where do outputs go?"
-    Nextflow runs each process in an isolated directory under `workflow/`. Output files are first written there, then can be **published** to a final location (e.g. `results/`) using the `publishDir` directive. For this simple example, we write directly to `results/` in the script; in real workflows you will typically use `publishDir` (covered later).
+??? full-code "Full code file"
+    ```groovy title="hello_world.nf" linenums="1"
+    #!/usr/bin/env nextflow
+
+    /*
+    * Use echo to print 'Hello World!' to a file
+    */
+
+    process hello_world {
+        output:
+            path 'hello.txt'
+        script:
+            '''
+            echo "Hello world!" > hello.txt
+            '''
+    }
+
+    workflow {
+        hello_world()
+    }
+    ```
+
+??? success "Answer"
+    When you run Nextflow for the first time in a given directory, it creates a directory called work where it will write all files (and any symlinks) generated in the course of execution.
+
+    Within the work directory, Nextflow organizes outputs and logs per process call. For each process call, Nextflow creates a nested subdirectory, named with a hash in order to make it unique, where it will stage all necessary inputs (using symlinks by default), write helper files, and write out logs and any outputs of the process.
+
+    The path to that subdirectory is shown in truncated form in square brackets in the console output. Looking at what we got for the run shown above, the console log line for the hello_world process starts with _`[00/00000]`_. That corresponds to the following directory path: _`work/00/0000000000...`_
+
+**Exercise:** Now, let's modify the workflow to specify where we want our output. Can you infer where the output will be stored?:
+
+=== "After"
+    ```groovy title="hello_world.nf" linenums="16"
+    workflow {
+        hello_world()
+
+    publish:
+        hello_folder = hello_world.out
+    }
+
+    output {
+        hello_folder {
+            path 'hello_folder'
+        }
+    }
+    ```
+
+=== "Before"
+    ```groovy title="hello_world.nf" linenums="16"
+    workflow {
+        hello_world()
+    }
+    ```
+
+??? success "Answer"
+    * The output is written to `results/hello_folder/hello.txt`. You can check with `ls -alh results/` and `cat results/hello_folder/hello.txt`.
+    * Nextflow creates the `results/` directory if it does not exist.
 
 ??? warning "Code structure in Nextflow"
     Nextflow uses Groovy-like syntax. Proper **indentation** and **braces** matter. A few rules:
 
-    * Use consistent indentation (typically 4 spaces)
-    * Do not mix space and tab indents
-    * Every `process` and `workflow` block must be properly closed with `}`
-
-??? success "Answer"
-    * The command to execute the workflow is:
-    ```sh
-    nextflow run main.nf
-    ```
-    * The output is written to `results/hello.txt` (as specified in the script). You can check with `ls -alh results/` and `cat results/hello.txt`
-    * Nextflow creates the `results/` directory if it does not exist
+    * Use consistent indentation (typically 4 spaces).
+    * Do not mix space and tab indents.
+    * Every `process` and `workflow` block must be properly closed with `}`.
 
 **Exercise:** Re-run the exact same command. What happens?
 
 ??? success "Answer"
-    Nextflow runs again, but it may **reuse cached results** from a previous run. If the process has already produced the same output (Nextflow hashes inputs to detect this), you might see a message indicating that the task was cached. To force a fresh run, you can use `nextflow run main.nf -resume` after a failure, or delete the `workflow/` directory to clear the cache.
+    Nextflow runs again, but it may **reuse cached results** from a previous run. If the process has already produced the same output (Nextflow hashes inputs to detect this), you might see a message indicating that the task was cached. To force a fresh run, you can use `nextflow run hello_nextflow.nf -resume` after a failure, or delete the `work/` directory to clear the cache.
 
 ??? info "Nextflow execution and caching"
     By default, Nextflow:
 
-    * Runs each process in an isolated directory under `workflow/`
-    * Caches task results based on input hashes—if you run again with the same inputs, it may reuse cached outputs
-    * Uses `-resume` to continue a failed run without re-executing completed tasks
-    * To force re-execution of everything, remove the `workflow/` directory before running
-
-Long commands in the `script` block can be split across lines using triple quotes:
-
-```groovy linenums="1"
-process long_message {
-    output:
-        path 'results/long_message.txt'
-    script:
-        '''
-        echo "I want to print a very very very very very \
-        very very very long string in my output" > results/long_message.txt
-        '''
-}
-```
+    * Runs each process in an isolated directory under `work/`.
+    * Caches task results based on input hashes—if you run again with the same inputs, it may reuse cached outputs.
+    * Uses `-resume` to continue a failed run without re-executing completed tasks.
+    * To force re-execution of everything, remove the `work/` directory before running.
 
 ### Understanding the input directive
 
-Another directive used by most processes is `input`. It declares the file(s) or data required by the process to create the output. In the following example, a process uses `results/hello.txt` as input and copies its content to `results/copied_file.txt`:
+Another directive used by most processes is `input`. It declares the file(s) or data required by the process to create the output. In the following example, a process uses `hello.txt` as input and copies its content to `copied_file.txt`:
 
 ```groovy linenums="1"
 process copy_file {
     input:
         path hello
     output:
-        path 'results/copied_file.txt'
+        path 'copied_file.txt'
     script:
         """
-        mkdir -p results
-        cp ${hello} results/copied_file.txt
+        cp ${hello} copied_file.txt
         """
 }
 ```
 
-Here, `hello` is a **channel** that will emit the file path. The `path` qualifier tells Nextflow to stage the file into the process work directory.
+Here, `hello` is a **Channel** that will emit the file path. The `path` qualifier tells Nextflow to stage the file into the process work directory.
+
+??? info "Nextflow channels"
+    Channels are the core of the Nextflow's engine. There are multiple ways to create channels:
+
+    * Check the [documentation](https://docs.seqera.io/nextflow/reference/channel) to know more about the Channel factories.
+    * We will discuss more about this in the lecture.
 
 ### Creating a workflow with several processes
 
@@ -139,7 +185,7 @@ In Nextflow, data flows through **channels**. The output of one process is a cha
 ```groovy linenums="1"
 workflow {
     hello_ch = hello_world()
-    copy_file(hello_ch)
+    copy_file(hello_ch.out)
 }
 ```
 
@@ -147,45 +193,67 @@ workflow {
 
 ??? bug "`Missing input` or `No such file`"
     If you see errors about missing inputs, check that:
-    * The workflow block correctly passes the output of one process as input to the next
-    * Output names match what the downstream process expects
-    * File paths in your `script` use the correct variable names (e.g. `${hello}`)
 
-**Exercise:** Add the `copy_file` process to your `main.nf`, and update the `workflow` block to call both processes. Run the workflow with `nextflow run main.nf`. What do you see?
+    * The workflow block correctly passes the output of one process as input to the next.
+    * Output names match what the downstream process expects.
+    * File paths in your `script` use the correct variable names (e.g. `${hello}`).
 
-??? tip "Your main.nf should look like this"
+**Exercise:** Add the `copy_file` process to your `hello_nextflow.nf`, and update the `workflow` block to call both processes. Run the workflow with `nextflow run hello_nextflow.nf`. What do you see?
+
+??? tip "Where are you going to store the output of `copy_file`?"
+    Following what we did in the previous exercise, try to figure out where to store the output of this process.
+
+??? full-code "This is the final script"
     ```groovy linenums="1"
+    #!/usr/bin/env nextflow
+
+    /*
+    * Use echo to print 'Hello World!' to a file
+    */
+
     process hello_world {
         output:
-            path 'results/hello.txt'
+            path 'hello.txt'
         script:
-            'echo "Hello world!" > results/hello.txt'
+            '''
+            echo "Hello world!" > hello.txt
+            '''
     }
 
     process copy_file {
         input:
             path hello
         output:
-            path 'results/copied_file.txt'
+            path 'copied_file.txt'
         script:
-            "cp ${hello} results/copied_file.txt"
+            """
+            cp ${hello} copied_file.txt
+            """
     }
 
     workflow {
-        hello_ch = hello_world()
-        copy_file(hello_ch)
+        hello_world()
+        copy_file(hello_world.out)
+        
+        publish:
+        hello_folder = hello_world.out
+        copy_folder = copy_file.out
+    }
+
+    output {
+        hello_folder {
+            path 'hello_folder'
+        }
+        copy_folder {
+            path 'copy_folder'
+        }
     }
     ```
 
 ??? success "Answer"
-    * Nextflow runs `hello_world` first, then `copy_file` with the output of `hello_world`
-    * Both `results/hello.txt` and `results/copied_file.txt` are produced
-    * To force a full re-run (e.g. after changing the script), you can delete the `workflow/` directory and run again
-
-**Exercise:** To trigger execution of both processes from scratch, remove the `results/` folder (or the `workflow/` cache), then run `nextflow run main.nf`. What happens?
-
-??? success "Answer"
-    Nextflow builds the execution graph, runs `hello_world`, then passes its output to `copy_file`, which runs and produces `results/copied_file.txt`. You only need to define the workflow connections—Nextflow figures out the execution order automatically.
+    * Nextflow runs `hello_world` first, then `copy_file` with the output of `hello_world`.
+    * Both `hello.txt` and `copied_file.txt` are produced, being stored individually within `hello_folder` and `copy_folder`, respectively.
+    * To force a full re-run (e.g. after changing the script), you can delete the `work` directory and run again.
 
 #### Referencing process outputs
 
@@ -200,4 +268,4 @@ The example above already uses this pattern: `hello_ch = hello_world()` and `cop
 ??? warning "Each process output should have a single producer"
     A given output file should be produced by only one process. If two processes could produce the same output, the workflow would be ambiguous. Design your pipeline so each output has a clear, single producer.
 
-Try to structure your workflows this way in the next series of exercises!
+We are ready to continue with a more complex pipeline!

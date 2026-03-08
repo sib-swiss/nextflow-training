@@ -62,6 +62,10 @@ We tried to use a colour code throughout the website to make the different piece
 
 !!! bug "This is an explanation about a common bug/error"
 
+!!! full-code "This is a full code file"
+
+!!! abstract "These are directory contents"
+
 ## Exercises
 
 Each question provides a background explanation, a description of the task at hand and additional details when required.
