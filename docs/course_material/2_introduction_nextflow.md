@@ -43,7 +43,7 @@ Other directives will be explained throughout the course.
 
 **Exercise:** The following example shows the minimal syntax to implement a process. What do you think it does? Does it create a file? If so, how is it called?
 
-```groovy linenums="1"
+```groovy title="hellow_nextflow.nf" linenums="1"
 process hello_world {
     output:
         path 'hello.txt'
@@ -59,7 +59,7 @@ process hello_world {
 
 You also need a **workflow** block that invokes your processes—otherwise Nextflow will not run anything.
 
-```groovy linenums="1"
+```groovy title="hellow_nextflow.nf" linenums="1"
 workflow {
     hello_world()
 }
@@ -153,7 +153,7 @@ It is now time to execute your first workflow! Nextflow runs the workflow define
 
 Another directive used by most processes is `input`. It declares the file(s) or data required by the process to create the output. In the following example, a process uses `hello.txt` as input and copies its content to `copied_file.txt`:
 
-```groovy linenums="1"
+```groovy title="hellow_nextflow.nf" linenums="1"
 process copy_file {
     input:
         path hello
@@ -182,7 +182,7 @@ The `input` and `output` directives, combined with **channels**, create links (d
 
 In Nextflow, data flows through **channels**. The output of one process is a channel; we pass it as input to the next process. The `workflow` block defines this flow:
 
-```groovy linenums="1"
+```groovy title="hellow_nextflow.nf" linenums="1"
 workflow {
     hello_ch = hello_world()
     copy_file(hello_ch.out)
@@ -204,7 +204,7 @@ workflow {
     Following what we did in the previous exercise, try to figure out where to store the output of this process.
 
 ??? full-code "This is the final script"
-    ```groovy linenums="1"
+    ```groovy title="hellow_nextflow.nf" linenums="1"
     #!/usr/bin/env nextflow
 
     /*

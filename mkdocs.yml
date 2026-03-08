@@ -6,7 +6,7 @@ nav:
     - Course material:
       - General guidelines: course_material/1_guidelines.md
       - Introduction to Nextflow: course_material/2_introduction_nextflow.md
-      - Making a more general-purpose Nextflow workflow: course_material/3_generalising_nextflow.md
+      - Making a more general-purpose Nextflow pipeline: course_material/3_hello_pipeline.md
       - Decorating and optimising a Nextflow workflow: course_material/4_optimising_nextflow.md
       - Being reproducible with Nextflow: course_material/5_reproducibility_nextflow.md
       - Running Nextflow in an HPC environment: course_material/6_hpc_nextflow.md
