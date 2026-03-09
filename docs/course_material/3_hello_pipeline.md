@@ -65,9 +65,58 @@ The **dataflow** and **basic DSL2 concepts** are covered in the [Introduction to
 - How changing `nextflow.config` changes the behaviour of the same code.
 - How Channels are created.
 
-## `nextflow.config`: centralizing settings
+??? full-code "hello-pipeline.nf"
+    ```groovy title="hello-pipeline.nf" linenums="1"
+    #!/usr/bin/env nextflow
 
-The `nextflow.config` file controls:
+    // Include modules
+    include { sayHello          }       from './modules/sayHello.nf'
+    include { convertToUpper    }       from './modules/convertToUpper.nf'
+    include { collectGreetings  }       from './modules/collectGreetings.nf'
+    include { cowpy             }       from './modules/cowpy.nf'
+
+    workflow {
+
+        main:
+        // create a channel for inputs from a CSV file
+        greeting_ch = channel.fromPath(params.input)
+                            .splitCsv()
+                            .map { line -> line[0] }
+        // emit a greeting
+        sayHello(greeting_ch)
+        // convert the greeting to uppercase
+        convertToUpper(sayHello.out)
+        // collect all the greetings into one file
+        collectGreetings(convertToUpper.out.collect(), params.batch)
+        // generate ASCII art of the greetings with cowpy
+        cowpy(collectGreetings.out.outfile, params.character)
+
+        publish:
+        first_output = sayHello.out
+        uppercased = convertToUpper.out
+        collected = collectGreetings.out.outfile
+        batch_report = collectGreetings.out.report
+        cowpy_art = cowpy.out
+    }
+
+    output {
+        first_output {
+            path { sayHello.name }
+        }
+        uppercased {
+            path { convertToUpper.name }
+        }
+        collected {
+            path { collectGreetings.name }
+        }
+        batch_report {
+            path { collectGreetings.name }
+        }
+        cowpy_art {
+            path { cowpy.name }
+        }
+    }
+    ```
 
 ??? full-code "nextflow.config"
     ```groovy title="nextflow.config" linenums="1"
@@ -100,6 +149,9 @@ The `nextflow.config` file controls:
     workflow.output.mode = 'copy'
     ```
 
+## Centralizing settings
+
+The `nextflow.config` file controls:
 
 - **Default process resources** (memory, CPUs).
 - **Pipeline parameters** (input file, batch name, cow character).
@@ -201,72 +253,24 @@ Combined with the `output` block in `hello-pipeline.nf`, this means:
 
 There is a variety of channel factories that we can use to set up a channel cosnidering that they are built in a way that allows us to operate on their contents using operators. You may have noticed the way in which the input file is read: this is a standard practice to read csv files, in which first `channel.fromPath` is called ([Channel factories](https://docs.seqera.io/nextflow/reference/channel)), and then the operators splitCsv() and map{} are invoked. This is done to generate a file name dynamically so that the final file names will be unique. We will cover more about operators in the next session.
 
-**From `hello-pipeline.nf`, keep in mind that each process like `sayHello`, `convertToUpper`, etc., is creating a channel through which the output(s) are flowing.**
+```groovy title="hello-pipeline.nf" linenums="13"
+    greeting_ch = channel.fromPath(params.input)
+                .splitCsv()
+                .map { line -> line[0] }
+```
 
 ??? info "Make file names unique"
     A common way to make the file names unique is to use some unique piece of metadata from the inputs (received from the input channel) as part of the output file name. Here, for convenience, we'll just use the greeting itself since it's just a short string, and prepend it to the base output filename.
 
-??? full-code "hello-pipeline.nf"
-    ```groovy title="hello-pipeline.nf" linenums="1" hl_lines="22-24"
-    #!/usr/bin/env nextflow
+**From `hello-pipeline.nf`, keep in mind that each process like `sayHello`, `convertToUpper`, etc., is creating a channel through which the output(s) are flowing.**
 
-    // Include modules
-    include { sayHello          }       from './modules/sayHello.nf'
-    include { convertToUpper    }       from './modules/convertToUpper.nf'
-    include { collectGreetings  }       from './modules/collectGreetings.nf'
-    include { cowpy             }       from './modules/cowpy.nf'
-
-    /*
-    * Pipeline parameters
-    */
-    params {
-        input: Path
-        batch: String
-        character: String
-    }
-
-    workflow {
-
-        main:
-        // create a channel for inputs from a CSV file
-        greeting_ch = channel.fromPath(params.input)
-                            .splitCsv()
-                            .map { line -> line[0] }
-        // emit a greeting
-        sayHello(greeting_ch)
-        // convert the greeting to uppercase
-        convertToUpper(sayHello.out)
-        // collect all the greetings into one file
-        collectGreetings(convertToUpper.out.collect(), params.batch)
-        // generate ASCII art of the greetings with cowpy
-        cowpy(collectGreetings.out.outfile, params.character)
-
-        publish:
-        first_output = sayHello.out
-        uppercased = convertToUpper.out
-        collected = collectGreetings.out.outfile
-        batch_report = collectGreetings.out.report
-        cowpy_art = cowpy.out
-    }
-
-    output {
-        first_output {
-            path { sayHello.name }
-        }
-        uppercased {
-            path { convertToUpper.name }
-        }
-        collected {
-            path { collectGreetings.name }
-        }
-        batch_report {
-            path { collectGreetings.name }
-        }
-        cowpy_art {
-            path { cowpy.name }
-        }
-    }
-    ```
+```groovy title="hello-pipeline.nf" linenums="17"
+    sayHello(greeting_ch)
+    // convert the greeting to uppercase
+    convertToUpper(sayHello.out)
+    // collect all the greetings into one file
+    collectGreetings(convertToUpper.out.collect(), params.batch)
+```
 
 ## Modules: processes in separate files
 
@@ -388,7 +392,7 @@ Here:
 
 In `modules/cowpy.nf`:
 
-??? info "Line to enable docker"
+??? info "Line to specify the container"
     For now, just ignore line 4 where the container is specified:
     ```groovy title="modules/cowpy.nf" linenums="4"
         container 'community.wave.seqera.io/library/cowpy:1.1.5--3db457ae1977a273'
@@ -416,7 +420,7 @@ Again, `${input_file}` is expanded to the actual filename of the collected greet
 
 The `hello-pipeline.nf` file uses a final `output` block to publish results. Instead of hard-coding paths, it uses:
 
-```groovy title="modules/cowpy.nf" linenums="42"
+```groovy title="modules/cowpy.nf" linenums="33"
 output {
     first_output {
         path { sayHello.name }
@@ -469,7 +473,7 @@ The `.name` property refers to the underlying process or module name:
     ```
 
 ??? full-code "hello-pipeline.nf"
-    ```groovy title="hello-pipeline.nf" linenums="1" hl_lines="8 35 43 62-64"
+    ```groovy title="hello-pipeline.nf" linenums="1" hl_lines="8 26 34 53-55"
     #!/usr/bin/env nextflow
 
     // Include modules
@@ -478,15 +482,6 @@ The `.name` property refers to the underlying process or module name:
     include { collectGreetings  }       from './modules/collectGreetings.nf'
     include { cowpy             }       from './modules/cowpy.nf'
     include { copy_file         }       from './modules/copy_file.nf'
-
-    /*
-    * Pipeline parameters
-    */
-    params {
-        input: Path
-        batch: String
-        character: String
-    }
 
     workflow {
 

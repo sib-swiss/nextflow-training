@@ -5,10 +5,10 @@
 | Session 2      | 09:50    | 10:15    | Channels, modules, parameters and variables              |
 |                | 10:15    | 10:30    | Break                                                    |
 | Exercises 2    | 10:30    | 11:15    | Hello Pipeline                                           |
-| Session 3      | 11:15    | 12:00    | Executors, software management and profiles              |
+| Session 3      | 11:15    | 12:00    | Operators, executors, software management and profiles   |
 |                | 12:00    | 13:00    | Lunch break                                              |
 | Exercises 3    | 13:00    | 14:00    | RNA-seq pipeline                                         |
-| Session 4      | 14:00    | 14:30    | Operators, conditionals, scripts _à la carte_, report    |
+| Session 4      | 14:00    | 14:30    | Conditionals, scripts _à la carte_, report               |
 | Exercises 4    | 14:30    | 15:30    | Metagenomics pipeline                                    |
 |                | 15:30    | 15:45    | Break                                                    |
 | Exercises 4    | 15:45    | 16:30    | Wrap your pipeline or genomics pipeline                  |

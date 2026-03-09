@@ -7,15 +7,6 @@ include { collectGreetings  }       from './modules/collectGreetings.nf'
 include { cowpy             }       from './modules/cowpy.nf'
 include { copy_file         }       from './modules/copy_file.nf'
 
-/*
- * Pipeline parameters
- */
-params {
-    input: Path
-    batch: String
-    character: String
-}
-
 workflow {
 
     main:

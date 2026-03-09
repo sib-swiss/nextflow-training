@@ -1,19 +1,10 @@
 #!/usr/bin/env nextflow
 
 // Include modules
-include { sayHello } from './modules/sayHello.nf'
-include { convertToUpper } from './modules/convertToUpper.nf'
-include { collectGreetings } from './modules/collectGreetings.nf'
-include { cowpy } from './modules/cowpy.nf'
-
-/*
- * Pipeline parameters
- */
-params {
-    input: Path
-    batch: String
-    character: String
-}
+include { sayHello              }             from './modules/sayHello.nf'
+include { convertToUpper        }             from './modules/convertToUpper.nf'
+include { collectGreetings      }             from './modules/collectGreetings.nf'
+include { cowpy                 }             from './modules/cowpy.nf'
 
 workflow {
 

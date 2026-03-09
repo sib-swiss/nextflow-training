@@ -1,23 +1,23 @@
 #!/usr/bin/env nextflow
 
 // Module INCLUDE statements
-include { FASTQC } from './modules/fastqc_pe.nf'
-include { TRIM_GALORE } from './modules/trim_galore_pe.nf'
-include { HISAT2_ALIGN } from './modules/hisat2_align_pe.nf'
-include { MULTIQC } from './modules/multiqc.nf'
+include { FASTQC                   }         from './modules/fastqc_pe.nf'
+include { TRIM_GALORE              }         from './modules/trim_galore_pe.nf'
+include { HISAT2_ALIGN             }         from './modules/hisat2_align_pe.nf'
+include { MULTIQC                  }         from './modules/multiqc.nf'
 
 /*
  * Pipeline parameters
  */
 params {
     // Primary input
-    input: Path
+    input = ""
 
     // Reference genome archive
-    hisat2_index_zip: Path
+    hisat2_index_zip = ""
 
     // Report ID
-    report_id: String
+    report_id = ""
 }
 
 workflow {
