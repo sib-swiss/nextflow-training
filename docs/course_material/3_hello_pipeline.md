@@ -204,7 +204,7 @@ There is a variety of channel factories that we can use to set up a channel cosn
 **From `hello-pipeline.nf`, keep in mind that each process like `sayHello`, `convertToUpper`, etc., is creating a channel through which the output(s) are flowing.**
 
 ??? info "Make file names unique"
-  A common way to make the file names unique is to use some unique piece of metadata from the inputs (received from the input channel) as part of the output file name. Here, for convenience, we'll just use the greeting itself since it's just a short string, and prepend it to the base output filename.
+    A common way to make the file names unique is to use some unique piece of metadata from the inputs (received from the input channel) as part of the output file name. Here, for convenience, we'll just use the greeting itself since it's just a short string, and prepend it to the base output filename.
 
 ??? full-code "hello-pipeline.nf"
     ```groovy title="hello-pipeline.nf" linenums="1" hl_lines="22-24"
@@ -300,7 +300,7 @@ The `hello-pipeline` shows several patterns for **dynamic filenames**, where out
 - The batch name.
 - The input file name.
 
-### `sayHello`: filenames based on the greeting
+### Filenames based on the greeting
 
 In `modules/sayHello.nf`:
 
@@ -325,7 +325,7 @@ This ensures:
 - Each input greeting produces its **own output file**.
 - Filenames are **traceable** (the greeting is visible in the filename).
 
-### `convertToUpper`: filenames derived from inputs
+### Filenames derived from inputs
 
 In `modules/convertToUpper.nf`:
 
@@ -352,7 +352,7 @@ This pattern:
 - Preserves the original filename.
 - Adds a clear prefix to show **which step** produced the file.
 
-### `collectGreetings`: using parameters in filenames
+### Using parameters in filenames
 
 In `modules/collectGreetings.nf`:
 
@@ -384,7 +384,7 @@ Here:
 
     - Changing `--batch` changes both **output directory** and **filenames**, keeping different runs tidy.
 
-### `cowpy`: prefixing filenames with the tool name
+### Prefixing filenames with the tool name
 
 In `modules/cowpy.nf`:
 
@@ -469,7 +469,7 @@ The `.name` property refers to the underlying process or module name:
     ```
 
 ??? full-code "hello-pipeline.nf"
-    ```groovy title="hello-pipeline.nf" linenums="1"
+    ```groovy title="hello-pipeline.nf" linenums="1" hl_lines="8 35 43 62-64"
     #!/usr/bin/env nextflow
 
     // Include modules
