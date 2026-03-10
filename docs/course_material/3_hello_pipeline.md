@@ -149,105 +149,7 @@ The **dataflow** and **basic DSL2 concepts** are covered in the [Introduction to
     workflow.output.mode = 'copy'
     ```
 
-## Centralizing settings
 
-The `nextflow.config` file controls:
-
-- **Default process resources** (memory, CPUs).
-- **Pipeline parameters** (input file, batch name, cow character).
-- **Where outputs are published**.
-
-### Process resources and per-process overrides
-
-The `process` block sets default resources for all processes, and then overrides them for specific ones:
-
-??? info "Line to enable docker"
-    For now, just ignore line 1 where docker is enabled:
-    ```groovy title="nextflow.config" linenums="1"
-        docker.enabled = true
-    ```
-    We'll cover this in the next session.
-
-```groovy title="nextflow.config" linenums="6"
-process {
-    memory = 1.GB
-    withName: 'cowpy' {
-        memory = 2.GB
-        cpus = 2
-    }
-}
-```
-
-- **Global default**: `memory = 1.GB` for all processes.
-- **Process specific**: The process `cowpy` will have dedicated resources with `memory = 2.GB` and `cpus = 2`.
-
-Thus:
-
-- Most processes run with 1 GB RAM and 1 CPU (implicit default).
-- `cowpy` is given more memory and CPUs to handle container start-up and text generation.
-
-??? warning "GitHub Codespaces"
-    Keep in mind that we are using the free tier of GitHub Codespaces, with only 2 CPUs.
-
-??? tip "Per-process tuning pattern"
-    This pattern (`process { ... withName: 'X' { ... } }`) is common in larger pipelines:
-
-    - Start from **sensible global defaults**.
-    - Override only the **heavy** or **special** processes.
-
-### Pipeline parameters
-
-The `params` block defines defaults that can be overridden on the command line:
-
-```groovy title="nextflow.config" linenums="17"
-params {
-    input = 'data/greetings.csv'
-    batch = 'batch'
-    character = 'turkey'
-}
-```
-
-- **`params.input`**: path to the input CSV file (e.g. `data/greetings.csv`).
-- **`params.batch`**: a short name for the current batch/run (used in filenames and output directory).
-- **`params.character`**: which cowpy character to use in the final ASCII art.
-
-**Exercise:** Can you imagine how it is possible to override these parameters?
-
-??? tip "Override parameters"
-    [Nextflow parameters](https://training.nextflow.io/2.0/basic_training/config/)
-
-??? success "Answer"
-    You can override any of these at run time:
-
-    ```bash
-    nextflow run hello-pipeline.nf \
-        --input custom_data/my_greetings.csv \
-        --batch friday_fun \
-        --character tux
-    ```
-
-    This will:
-
-    - Read greetings from `custom_data/my_greetings.csv`.
-    - Use `friday_fun` in output filenames and directories.
-    - Render ASCII art using the `tux` character.
-
-### Output configuration
-
-At the end of `nextflow.config` you will find:
-
-```groovy title="nextflow.config" linenums="27"
-outputDir = "results/${params.batch}"
-workflow.output.mode = 'copy'
-```
-
-- **outputDir**: all published outputs are grouped under a directory named after the batch.
-- **workflow.output.mode**: outputs are copied (not symlinked) into the final results directory.
-
-Combined with the `output` block in `hello-pipeline.nf`, this means:
-
-- If `params.batch = 'batch'`, outputs are written under `results/batch/`.
-- Changing `--batch` creates a **clean new results folder** for each run.
 
 ## Channels
 
@@ -444,6 +346,106 @@ The `.name` property refers to the underlying process or module name:
 
 - This keeps the **final publication logic** short and consistent.
 - If you rename a process, you only update it in one place.
+
+## Centralizing settings
+
+The [`nextflow.config`](./3_hello_pipeline.md#overview-of-the-hello-pipeline-project) file controls:
+
+- **Default process resources** (memory, CPUs).
+- **Pipeline parameters** (input file, batch name, cow character).
+- **Where outputs are published**.
+
+### Process resources and per-process overrides
+
+The `process` block sets default resources for all processes, and then overrides them for specific ones:
+
+??? info "Line to enable docker"
+    For now, just ignore line 1 where docker is enabled:
+    ```groovy title="nextflow.config" linenums="1"
+        docker.enabled = true
+    ```
+    We'll cover this in the next session.
+
+```groovy title="nextflow.config" linenums="6"
+process {
+    memory = 1.GB
+    withName: 'cowpy' {
+        memory = 2.GB
+        cpus = 2
+    }
+}
+```
+
+- **Global default**: `memory = 1.GB` for all processes.
+- **Process specific**: The process `cowpy` will have dedicated resources with `memory = 2.GB` and `cpus = 2`.
+
+Thus:
+
+- Most processes run with 1 GB RAM and 1 CPU (implicit default).
+- `cowpy` is given more memory and CPUs to handle container start-up and text generation.
+
+??? warning "GitHub Codespaces"
+    Keep in mind that we are using the free tier of GitHub Codespaces with only 2 CPUs.
+
+??? tip "Per-process tuning pattern"
+    This pattern (`process { ... withName: 'X' { ... } }`) is common in larger pipelines:
+
+    - Start from **sensible global defaults**.
+    - Override only the **heavy** or **special** processes.
+
+### Pipeline parameters
+
+The `params` block defines defaults that can be overridden on the command line:
+
+```groovy title="nextflow.config" linenums="17"
+params {
+    input = 'data/greetings.csv'
+    batch = 'batch'
+    character = 'turkey'
+}
+```
+
+- **`params.input`**: path to the input CSV file (e.g. `data/greetings.csv`).
+- **`params.batch`**: a short name for the current batch/run (used in filenames and output directory).
+- **`params.character`**: which cowpy character to use in the final ASCII art.
+
+**Exercise:** Can you imagine how it is possible to override these parameters?
+
+??? tip "Override parameters"
+    [Nextflow parameters](https://training.nextflow.io/2.0/basic_training/config/)
+
+??? success "Answer"
+    You can override any of these at run time:
+
+    ```bash
+    nextflow run hello-pipeline.nf \
+        --input custom_data/my_greetings.csv \
+        --batch friday_fun \
+        --character tux
+    ```
+
+    This will:
+
+    - Read greetings from `custom_data/my_greetings.csv`.
+    - Use `friday_fun` in output filenames and directories.
+    - Render ASCII art using the `tux` character.
+
+### Output configuration
+
+At the end of `nextflow.config` you will find:
+
+```groovy title="nextflow.config" linenums="27"
+outputDir = "results/${params.batch}"
+workflow.output.mode = 'copy'
+```
+
+- **outputDir**: all published outputs are grouped under a directory named after the batch.
+- **workflow.output.mode**: outputs are copied (not symlinked) into the final results directory.
+
+Combined with the `output` block in `hello-pipeline.nf`, this means:
+
+- If `params.batch = 'batch'`, outputs are written under `results/batch/`.
+- Changing `--batch` creates a **clean new results folder** for each run.
 
 **Exercise:** Try to apply what you have learned so far to reuse the process `copy_file` developed during [Introduction to Nextflow](./2_introduction_nextflow.md). The goal is to copy the file generated by the last process (`cowpy`) in this pipeline.
 
