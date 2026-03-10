@@ -532,56 +532,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#centralizing-settings" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Centralizing settings
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Centralizing settings">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#process-resources-and-per-process-overrides" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Process resources and per-process overrides
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pipeline-parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pipeline parameters
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output configuration
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#channels" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -664,6 +614,56 @@
     <span class="md-ellipsis">
       
         Dynamic naming in the workflow output block
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#centralizing-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Centralizing settings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Centralizing settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#process-resources-and-per-process-overrides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process resources and per-process overrides
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipeline parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Output configuration
       
     </span>
   </a>
@@ -807,56 +807,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#centralizing-settings" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Centralizing settings
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Centralizing settings">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#process-resources-and-per-process-overrides" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Process resources and per-process overrides
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pipeline-parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pipeline parameters
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output configuration
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#channels" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -939,6 +889,56 @@
     <span class="md-ellipsis">
       
         Dynamic naming in the workflow output block
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#centralizing-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Centralizing settings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Centralizing settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#process-resources-and-per-process-overrides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process resources and per-process overrides
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipeline parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Output configuration
       
     </span>
   </a>
@@ -1196,109 +1196,6 @@ code<span class="w"> </span>.
 <span class="n">workflow</span><span class="o">.</span><span class="na">output</span><span class="o">.</span><span class="na">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;copy&#39;</span>
 </code></pre></div></td></tr></table></div>
 </details>
-<h2 id="centralizing-settings">Centralizing settings</h2>
-<p>The <code>nextflow.config</code> file controls:</p>
-<ul>
-<li><strong>Default process resources</strong> (memory, CPUs).</li>
-<li><strong>Pipeline parameters</strong> (input file, batch name, cow character).</li>
-<li><strong>Where outputs are published</strong>.</li>
-</ul>
-<h3 id="process-resources-and-per-process-overrides">Process resources and per-process overrides</h3>
-<p>The <code>process</code> block sets default resources for all processes, and then overrides them for specific ones:</p>
-<details class="info">
-<summary>Line to enable docker</summary>
-<p>For now, just ignore line 1 where docker is enabled:
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">nextflow.config</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">    </span><span class="n">docker</span><span class="o">.</span><span class="na">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
-</code></pre></div></td></tr></table></div>
-We&rsquo;ll cover this in the next session.</p>
-</details>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">nextflow.config</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">memory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="o">.</span><span class="na">GB</span>
-<span class="w">    </span><span class="nl">withName:</span><span class="w"> </span><span class="s1">&#39;cowpy&#39;</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">memory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">.</span><span class="na">GB</span>
-<span class="w">        </span><span class="n">cpus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></td></tr></table></div>
-<ul>
-<li><strong>Global default</strong>: <code>memory = 1.GB</code> for all processes.</li>
-<li><strong>Process specific</strong>: The process <code>cowpy</code> will have dedicated resources with <code>memory = 2.GB</code> and <code>cpus = 2</code>.</li>
-</ul>
-<p>Thus:</p>
-<ul>
-<li>Most processes run with 1 GB RAM and 1 CPU (implicit default).</li>
-<li><code>cowpy</code> is given more memory and CPUs to handle container start-up and text generation.</li>
-</ul>
-<details class="warning">
-<summary>GitHub Codespaces</summary>
-<p>Keep in mind that we are using the free tier of GitHub Codespaces, with only 2 CPUs.</p>
-</details>
-<details class="tip">
-<summary>Per-process tuning pattern</summary>
-<p>This pattern (<code>process { ... withName: 'X' { ... } }</code>) is common in larger pipelines:</p>
-<ul>
-<li>Start from <strong>sensible global defaults</strong>.</li>
-<li>Override only the <strong>heavy</strong> or <strong>special</strong> processes.</li>
-</ul>
-</details>
-<h3 id="pipeline-parameters">Pipeline parameters</h3>
-<p>The <code>params</code> block defines defaults that can be overridden on the command line:</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">nextflow.config</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">params</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;data/greetings.csv&#39;</span>
-<span class="w">    </span><span class="n">batch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;batch&#39;</span>
-<span class="w">    </span><span class="n">character</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;turkey&#39;</span>
-<span class="o">}</span>
-</code></pre></div></td></tr></table></div>
-<ul>
-<li><strong><code>params.input</code></strong>: path to the input CSV file (e.g. <code>data/greetings.csv</code>).</li>
-<li><strong><code>params.batch</code></strong>: a short name for the current batch/run (used in filenames and output directory).</li>
-<li><strong><code>params.character</code></strong>: which cowpy character to use in the final ASCII art.</li>
-</ul>
-<p><strong>Exercise:</strong> Can you imagine how it is possible to override these parameters?</p>
-<details class="tip">
-<summary>Override parameters</summary>
-<p><a href="https://training.nextflow.io/2.0/basic_training/config/">Nextflow parameters</a></p>
-</details>
-<details class="success">
-<summary>Answer</summary>
-<p>You can override any of these at run time:</p>
-<div class="highlight"><pre><span></span><code>nextflow<span class="w"> </span>run<span class="w"> </span>hello-pipeline.nf<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--input<span class="w"> </span>custom_data/my_greetings.csv<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--batch<span class="w"> </span>friday_fun<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--character<span class="w"> </span>tux
-</code></pre></div>
-<p>This will:</p>
-<ul>
-<li>Read greetings from <code>custom_data/my_greetings.csv</code>.</li>
-<li>Use <code>friday_fun</code> in output filenames and directories.</li>
-<li>Render ASCII art using the <code>tux</code> character.</li>
-</ul>
-</details>
-<h3 id="output-configuration">Output configuration</h3>
-<p>At the end of <code>nextflow.config</code> you will find:</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">nextflow.config</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">27</span>
-<span class="normal">28</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">outputDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;results/${params.batch}&quot;</span>
-<span class="n">workflow</span><span class="o">.</span><span class="na">output</span><span class="o">.</span><span class="na">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;copy&#39;</span>
-</code></pre></div></td></tr></table></div>
-<ul>
-<li><strong>outputDir</strong>: all published outputs are grouped under a directory named after the batch.</li>
-<li><strong>workflow.output.mode</strong>: outputs are copied (not symlinked) into the final results directory.</li>
-</ul>
-<p>Combined with the <code>output</code> block in <code>hello-pipeline.nf</code>, this means:</p>
-<ul>
-<li>If <code>params.batch = 'batch'</code>, outputs are written under <code>results/batch/</code>.</li>
-<li>Changing <code>--batch</code> creates a <strong>clean new results folder</strong> for each run.</li>
-</ul>
 <h2 id="channels">Channels</h2>
 <p>There is a variety of channel factories that we can use to set up a channel cosnidering that they are built in a way that allows us to operate on their contents using operators. You may have noticed the way in which the input file is read: this is a standard practice to read csv files, in which first <code>channel.fromPath</code> is called (<a href="https://docs.seqera.io/nextflow/reference/channel">Channel factories</a>), and then the operators splitCsv() and map{} are invoked. This is done to generate a file name dynamically so that the final file names will be unique. We will cover more about operators in the next session.</p>
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">hello-pipeline.nf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">13</span>
@@ -1503,6 +1400,109 @@ We&rsquo;ll cover this in the next session.</p>
 <ul>
 <li>This keeps the <strong>final publication logic</strong> short and consistent.</li>
 <li>If you rename a process, you only update it in one place.</li>
+</ul>
+<h2 id="centralizing-settings">Centralizing settings</h2>
+<p>The <a href="./#overview-of-the-hello-pipeline-project"><code>nextflow.config</code></a> file controls:</p>
+<ul>
+<li><strong>Default process resources</strong> (memory, CPUs).</li>
+<li><strong>Pipeline parameters</strong> (input file, batch name, cow character).</li>
+<li><strong>Where outputs are published</strong>.</li>
+</ul>
+<h3 id="process-resources-and-per-process-overrides">Process resources and per-process overrides</h3>
+<p>The <code>process</code> block sets default resources for all processes, and then overrides them for specific ones:</p>
+<details class="info">
+<summary>Line to enable docker</summary>
+<p>For now, just ignore line 1 where docker is enabled:
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">nextflow.config</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">    </span><span class="n">docker</span><span class="o">.</span><span class="na">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+</code></pre></div></td></tr></table></div>
+We&rsquo;ll cover this in the next session.</p>
+</details>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">nextflow.config</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">process</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">memory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="o">.</span><span class="na">GB</span>
+<span class="w">    </span><span class="nl">withName:</span><span class="w"> </span><span class="s1">&#39;cowpy&#39;</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">memory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">.</span><span class="na">GB</span>
+<span class="w">        </span><span class="n">cpus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><strong>Global default</strong>: <code>memory = 1.GB</code> for all processes.</li>
+<li><strong>Process specific</strong>: The process <code>cowpy</code> will have dedicated resources with <code>memory = 2.GB</code> and <code>cpus = 2</code>.</li>
+</ul>
+<p>Thus:</p>
+<ul>
+<li>Most processes run with 1 GB RAM and 1 CPU (implicit default).</li>
+<li><code>cowpy</code> is given more memory and CPUs to handle container start-up and text generation.</li>
+</ul>
+<details class="warning">
+<summary>GitHub Codespaces</summary>
+<p>Keep in mind that we are using the free tier of GitHub Codespaces with only 2 CPUs.</p>
+</details>
+<details class="tip">
+<summary>Per-process tuning pattern</summary>
+<p>This pattern (<code>process { ... withName: 'X' { ... } }</code>) is common in larger pipelines:</p>
+<ul>
+<li>Start from <strong>sensible global defaults</strong>.</li>
+<li>Override only the <strong>heavy</strong> or <strong>special</strong> processes.</li>
+</ul>
+</details>
+<h3 id="pipeline-parameters">Pipeline parameters</h3>
+<p>The <code>params</code> block defines defaults that can be overridden on the command line:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">nextflow.config</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">params</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;data/greetings.csv&#39;</span>
+<span class="w">    </span><span class="n">batch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;batch&#39;</span>
+<span class="w">    </span><span class="n">character</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;turkey&#39;</span>
+<span class="o">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><strong><code>params.input</code></strong>: path to the input CSV file (e.g. <code>data/greetings.csv</code>).</li>
+<li><strong><code>params.batch</code></strong>: a short name for the current batch/run (used in filenames and output directory).</li>
+<li><strong><code>params.character</code></strong>: which cowpy character to use in the final ASCII art.</li>
+</ul>
+<p><strong>Exercise:</strong> Can you imagine how it is possible to override these parameters?</p>
+<details class="tip">
+<summary>Override parameters</summary>
+<p><a href="https://training.nextflow.io/2.0/basic_training/config/">Nextflow parameters</a></p>
+</details>
+<details class="success">
+<summary>Answer</summary>
+<p>You can override any of these at run time:</p>
+<div class="highlight"><pre><span></span><code>nextflow<span class="w"> </span>run<span class="w"> </span>hello-pipeline.nf<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--input<span class="w"> </span>custom_data/my_greetings.csv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--batch<span class="w"> </span>friday_fun<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--character<span class="w"> </span>tux
+</code></pre></div>
+<p>This will:</p>
+<ul>
+<li>Read greetings from <code>custom_data/my_greetings.csv</code>.</li>
+<li>Use <code>friday_fun</code> in output filenames and directories.</li>
+<li>Render ASCII art using the <code>tux</code> character.</li>
+</ul>
+</details>
+<h3 id="output-configuration">Output configuration</h3>
+<p>At the end of <code>nextflow.config</code> you will find:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">nextflow.config</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">27</span>
+<span class="normal">28</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">outputDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;results/${params.batch}&quot;</span>
+<span class="n">workflow</span><span class="o">.</span><span class="na">output</span><span class="o">.</span><span class="na">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;copy&#39;</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><strong>outputDir</strong>: all published outputs are grouped under a directory named after the batch.</li>
+<li><strong>workflow.output.mode</strong>: outputs are copied (not symlinked) into the final results directory.</li>
+</ul>
+<p>Combined with the <code>output</code> block in <code>hello-pipeline.nf</code>, this means:</p>
+<ul>
+<li>If <code>params.batch = 'batch'</code>, outputs are written under <code>results/batch/</code>.</li>
+<li>Changing <code>--batch</code> creates a <strong>clean new results folder</strong> for each run.</li>
 </ul>
 <p><strong>Exercise:</strong> Try to apply what you have learned so far to reuse the process <code>copy_file</code> developed during <a href="../2_introduction_nextflow/">Introduction to Nextflow</a>. The goal is to copy the file generated by the last process (<code>cowpy</code>) in this pipeline.</p>
 <details class="tip">
