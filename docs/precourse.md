@@ -21,7 +21,7 @@ This is the link to GitHub Codespaces:
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/jeffe107/nextflow-training?quickstart=1)
 
 !!! warning "Do not start working on it"
-    We have limited resources with the free tier of GitHub Codespaces, so please do not start working or runing thins through it. You just need to create it before the course
+    We have limited resources with the free tier of GitHub Codespaces, so please do not start working or running thins through it. You just need to create it before the course.
 
 #### Video tutorial
 
