@@ -31,7 +31,7 @@ You can find a (cool) video tutorial to learn about VS code:
 
 ### Back-up plan
 
-If by any chance, you exceed the Codespace resources. We have prepared a solution using [CodeSandbox](https://codesandbox.io/). These are the steps to follow:
+If you exceed the Codespace resources, we have prepared a solution using [CodeSandbox](https://codesandbox.io/). These are the steps to follow:
 
 1. Go to the website: [CodeSandbox](https://codesandbox.io/).
 2. Sign in using your GitHub or your Google Account (top right corner).
