@@ -25,6 +25,8 @@ process copy_file {
 }
 
 workflow {
+
+    main:
     hello_world()
     copy_file(hello_world.out)
     

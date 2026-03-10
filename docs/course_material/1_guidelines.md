@@ -20,31 +20,7 @@ All the software needed in this workflow is either:
 
 Without further ado, you can start here:
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/nextflow-io/training?quickstart=1&ref=master)
-
-If by any chance, you exceed the Codespace resources. We have prepared a solution using [CodeSandbox](https://codesandbox.io/). These are the steps to follow:
-
-1. Go to the website: [CodeSandbox](https://codesandbox.io/).
-2. Sign in using your GitHub or your Google Account (top right corner).
-3. Once signed-in, click on `+ Create` (top right corner).
-4. Select `Docker CodeSanbox`.
-5. On the `Configure window` leave everything as default and click on Create Devbox.
-6. Wait until the microVM is created.
-7. Now it looks like VS code. Create a new terminal then.
-8. Run the following commands on the terminal:
-
-```bash
-curl -s https://get.sdkman.io | bash
-source "/root/.sdkman/bin/sdkman-init.sh"
-sdk install java 17.0.10-tem
-curl -s https://get.nextflow.io | bash
-chmod +x nextflow
-export PATH=${PATH}:/project/workspace
-git clone https://github.com/jeffe107/nextflow-training
-cd nextflow-training
-```
-
-9. Now you should be into the repository folder, just like on GitHub Codespaces.
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/jeffe107/nextflow-training?quickstart=1)
 
 All information of this course is based on the [official Nextflow documentation](https://docs.seqera.io/nextflow/) and uses **Nextflow DSL2** syntax.
 

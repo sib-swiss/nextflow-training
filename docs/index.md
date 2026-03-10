@@ -15,7 +15,7 @@ This course is built on the official [Nextflow training material](https://traini
 * Repository with files
 * A workspace on GitHub Codespaces:
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/nextflow-io/training?quickstart=1&ref=master)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/jeffe107/nextflow-training?quickstart=1)
 
 ## Learning outcomes
 
@@ -26,7 +26,7 @@ After this course, you will be able to:
 * Recognize the benefits of wrapping their routine analysis with a workflow orchestrator.
 * Learn how to modularize their pipelines to enhance the control execution.
 * Develop your own pipelines wrapped with Nextflow.
-* Run your pipeline in different environments.
+* Run your pipelines in different environments.
 
 ### Learning outcomes explained
 

@@ -61,6 +61,8 @@ You also need a **workflow** block that invokes your processes—otherwise Nextf
 
 ```groovy title="hellow_nextflow.nf" linenums="1"
 workflow {
+
+    main:
     hello_world()
 }
 ```
@@ -89,6 +91,8 @@ It is now time to execute your first workflow! Nextflow runs the workflow define
     }
 
     workflow {
+
+        main:
         hello_world()
     }
     ```
@@ -105,6 +109,8 @@ It is now time to execute your first workflow! Nextflow runs the workflow define
 === "After"
     ```groovy title="hello_world.nf" linenums="16"
     workflow {
+
+        main:
         hello_world()
 
     publish:
@@ -121,6 +127,8 @@ It is now time to execute your first workflow! Nextflow runs the workflow define
 === "Before"
     ```groovy title="hello_world.nf" linenums="16"
     workflow {
+
+        main:
         hello_world()
     }
     ```
@@ -184,6 +192,8 @@ In Nextflow, data flows through **channels**. The output of one process is a cha
 
 ```groovy title="hellow_nextflow.nf" linenums="1"
 workflow {
+
+    main:
     hello_ch = hello_world()
     copy_file(hello_ch.out)
 }
@@ -232,6 +242,8 @@ workflow {
     }
 
     workflow {
+
+        main:
         hello_world()
         copy_file(hello_world.out)
         

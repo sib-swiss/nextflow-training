@@ -14,6 +14,8 @@ process hello_world {
 }
 
 workflow {
+    
+    main:
     hello_world()
 
     publish:
