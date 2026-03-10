@@ -259,7 +259,7 @@ nextflow run rnaseq.nf -profile univ_hpc
     - [More executors](https://www.nextflow.io/docs/latest/executor.html)
 
 ??? tip "Profiles can do much more"
-    Setting profiles is much more useful than just setting the executors. [Below](./5_rnaseq_executors_profiles.md#profiles-adapting-to-different-environments), you will see other profiles you can create.
+    Setting profiles is much more useful than just setting the executors. [Below](./4_rnaseq_executors_profiles.md#profiles-adapting-to-different-environments), you will see other profiles you can create.
 
 ## Operators: shaping the dataflow
 
