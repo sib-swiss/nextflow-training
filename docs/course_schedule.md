@@ -1,6 +1,6 @@
 | Session        | Start    | End      | Topic                                                    |
 |--------------- |--------- |--------- |--------------------------------------------------------- |
-| Session 1      | 09:00     | 09:30   | Workflow managers and Nextflow architecture              |
+| Session 1      | 09:00    | 09:30    | Workflow managers and Nextflow architecture              |
 | Exercises 1    | 09:30    | 09:50    | Intro pipeline                                           |
 | Session 2      | 09:50    | 10:15    | Channels, modules, parameters and variables              |
 |                | 10:15    | 10:30    | Break                                                    |

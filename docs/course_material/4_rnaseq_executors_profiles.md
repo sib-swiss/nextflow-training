@@ -86,20 +86,6 @@ In `rnaseq-pipeline.nf`, the workflow:
     include { HISAT2_ALIGN        }      from './modules/hisat2_align_pe.nf'
     include { MULTIQC             }      from './modules/multiqc.nf'
 
-    /*
-    * Pipeline parameters
-    */
-    params {
-        // Primary input
-        input = ""
-
-        // Reference genome archive
-        hisat2_index_zip = ""
-
-        // Report ID
-        report_id = ""
-    }
-
     workflow {
 
         main:
@@ -181,6 +167,15 @@ In `rnaseq-pipeline.nf`, the workflow:
     docker.enabled = true
     conda.enabled = false
 
+    params {
+        // Primary input
+        input = ""
+        // Reference genome archive
+        hisat2_index_zip = ""
+        // Report ID
+        report_id = ""
+    }
+
     profiles {
 
         my_laptop {
@@ -211,7 +206,7 @@ In this pipeline, the executor is controlled entirely by `nextflow.config` profi
 
 - **`my_laptop` profile:**
 
-```groovy title="nextflow.config" linenums="6"
+```groovy title="nextflow.config" linenums="15"
     my_laptop {
         process.executor = 'local'
         docker.enabled = true
@@ -220,7 +215,7 @@ In this pipeline, the executor is controlled entirely by `nextflow.config` profi
 
 - **`univ_hpc` profile:**
 
-```groovy title="nextflow.config" linenums="10"
+```groovy title="nextflow.config" linenums="19"
       univ_hpc {
           process.executor = 'slurm'
           conda.enabled = true
@@ -429,7 +424,7 @@ With `conda.enabled = true` (e.g. `univ_hpc`):
 
 Let's bring back the profiles found in `nextflow.config` 
 
-```groovy title="nextflow.config" linenums="4"
+```groovy title="nextflow.config" linenums="13"
     profiles {
         my_laptop {
             process.executor = 'local'
@@ -481,7 +476,7 @@ This lets you:
 ??? success "Exercise: create your own profile"
     Adding the profile in `nextflow.config`:
 
-    ```groovy title="nextflow.config" linenums="24"
+    ```groovy title="nextflow.config" linenums="33"
         codespaces {
               docker.enabled = false
               params.input = "data/paired-end.csv"
