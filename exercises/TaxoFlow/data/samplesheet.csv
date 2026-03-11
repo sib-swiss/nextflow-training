@@ -1,4 +1,4 @@
 sample_id,fastq_1,fastq_2
-ERR2143768,/workspaces/nextflow-training/test_pipelines/TaxoFlow/data/samples/ERR2143768/ERR2143768_1.fastq,/workspaces/nextflow-training/test_pipelines/TaxoFlow/data/samples/ERR2143768/ERR2143768_2.fastq
-ERR2143770,/workspaces/nextflow-training/test_pipelines/TaxoFlow/data/samples/ERR2143770/ERR2143770_1.fastq,/workspaces/nextflow-training/test_pipelines/TaxoFlow/data/samples/ERR2143770/ERR2143770_2.fastq
-ERR2143774,/workspaces/nextflow-training/test_pipelines/TaxoFlow/data/samples/ERR2143774/ERR2143774_1.fastq,/workspaces/nextflow-training/test_pipelines/TaxoFlow/data/samples/ERR2143774/ERR2143774_2.fastq
+ERR2143768,/workspaces/nextflow-training/exercises/TaxoFlow/data/samples/ERR2143768/ERR2143768_1.fastq,/workspaces/nextflow-training/exercises/TaxoFlow/data/samples/ERR2143768/ERR2143768_2.fastq
+ERR2143770,/workspaces/nextflow-training/exercises/TaxoFlow/data/samples/ERR2143770/ERR2143770_1.fastq,/workspaces/nextflow-training/exercises/TaxoFlow/data/samples/ERR2143770/ERR2143770_2.fastq
+ERR2143774,/workspaces/nextflow-training/exercises/TaxoFlow/data/samples/ERR2143774/ERR2143774_1.fastq,/workspaces/nextflow-training/exercises/TaxoFlow/data/samples/ERR2143774/ERR2143774_2.fastq
