@@ -1,8 +1,8 @@
-# RNA-seq pipeline: executors, operators, software management and profiles
+## RNA-seq pipeline: executors, operators, software management and profiles
 
 ## Learning outcomes
 
-**After having completed this stage you will be able to:**
+**After having completed this chapter you will be able to:**
 
 - Explain how **executors** control where the RNA-seq workflow runs (local vs. cluster).
 - Use common channel **operators** (e.g. `splitCsv`, `map`, `mix`, `collect`) to orchestrate complex logic.
@@ -21,13 +21,6 @@ Let's go to the directory then:
 cd /workspaces/nextflow-training/exercises/rnaseq-pipeline
 code .
 ```
-
-The RNA-seq pipeline in `exercises/rnaseq-pipeline/` is a more realistic example that:
-
-- Uses multiple processes for quality control, trimming, alignment and reporting.
-- Leverages **executors** and **profiles** to run on a laptop or on an HPC cluster.
-- Chains data with several **channel operators**.
-- Runs tools via **containers** or **Conda**, depending on the selected profile.
 
 ??? abstract "These are the files in the directory"
     ```console title="rnaseq-pipeline/"
@@ -56,6 +49,13 @@ The RNA-seq pipeline in `exercises/rnaseq-pipeline/` is a more realistic example
       ├── nextflow.config
       └── rnaseq.nf
     ```
+
+The RNA-seq pipeline in `exercises/rnaseq-pipeline/` is a more realistic example that:
+
+- Uses multiple processes for quality control, trimming, alignment and reporting.
+- Leverages **executors** and **profiles** to run on a laptop or on an HPC cluster.
+- Chains data with several **channel operators**.
+- Runs tools via **containers** or **Conda**, depending on the selected profile.
 
 The main components are:
 
@@ -193,9 +193,8 @@ In `rnaseq-pipeline.nf`, the workflow:
         }
 
         test {
-            params.input = "data/paired-end.csv"
-            params.hisat2_index_zip = "data/genome_index.tar.gz"
-            params.report_id = "all_paired-end"
+            params.input = "${projectDir}/data/paired-end.csv"
+            params.hisat2_index_zip = "${projectDir}/data/genome_index.tar.gz"
         }
     }
     ```
@@ -440,16 +439,16 @@ Let's bring back the profiles found in `nextflow.config`
               ]
           }
         test {
-                params.input = "data/paired-end.csv"
-                params.hisat2_index_zip = "data/genome_index.tar.gz"
+                params.input = "${projectDir}/data/paired-end.csv"
+                params.hisat2_index_zip = "${projectDir}/data/genome_index.tar.gz"
                 params.report_id = "all_paired-end"
         }
       }
 ```
 
-Aside from combining executor and software engine settings, profiles can contain parameters to define full executions. Here, the profile `test`
+Aside from combining executor and software engine settings, profiles can contain parameters to define full executions. Here, the profile `test`:
 
-  - Overrides `params.input` to a small CSV (`data/test_local.csv`).
+  - Sets `params.input` to the CSV file `data/paired-end.csv`.
   - Sets `params.hisat2_index_zip` to `data/genome_index.tar.gz`.
   - Sets `params.report_id = "all_paired-end"`.
 
@@ -479,9 +478,8 @@ This lets you:
     ```groovy title="nextflow.config" linenums="33"
         codespaces {
               docker.enabled = false
-              params.input = "data/paired-end.csv"
-              params.hisat2_index_zip = "data/genome_index.tar.gz"
-              params.report_id = "all_paired-end"
+              params.input = "${projectDir}/data/paired-end.csv"
+              params.hisat2_index_zip = "${projectDir}/data/genome_index.tar.gz"
         }
     ```
 

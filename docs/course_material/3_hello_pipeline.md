@@ -1,4 +1,4 @@
-# Generalizing the _Hello_ pipeline
+## Generalizing the _Hello_ pipeline
 
 ## Learning outcomes
 
@@ -137,7 +137,7 @@ The **dataflow** and **basic DSL2 concepts** are covered in the [Introduction to
     * Pipeline parameters
     */
     params {
-        input = 'data/greetings.csv'
+        input = "${projectDir}/data/greetings.csv"
         batch = 'batch'
         character = 'turkey'
     }
@@ -148,8 +148,6 @@ The **dataflow** and **basic DSL2 concepts** are covered in the [Introduction to
     outputDir = "results/${params.batch}"
     workflow.output.mode = 'copy'
     ```
-
-
 
 ## Channels
 
@@ -322,7 +320,7 @@ Again, `${input_file}` is expanded to the actual filename of the collected greet
 
 The `hello-pipeline.nf` file uses a final `output` block to publish results. Instead of hard-coding paths, it uses:
 
-```groovy title="modules/cowpy.nf" linenums="33"
+```groovy title="hello-pipeline.nf" linenums="33"
 output {
     first_output {
         path { sayHello.name }
@@ -395,11 +393,11 @@ Thus:
 
 ### Pipeline parameters
 
-The `params` block defines defaults that can be overridden on the command line:
+The `params` block defines defaults:
 
 ```groovy title="nextflow.config" linenums="17"
 params {
-    input = 'data/greetings.csv'
+    input = "${projectDir}/data/greetings.csv"
     batch = 'batch'
     character = 'turkey'
 }

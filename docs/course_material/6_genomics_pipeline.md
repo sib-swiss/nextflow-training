@@ -212,14 +212,14 @@ In the `workflow` block:
     ```groovy title="genomics.nf" linenums="11"
         example_channel = channelFactory(whereTheCsvIs)
             .splitCsv(DoesItHaveHeader)
-            .map { row -> file(row.reads_bam) }
+            .map { closure }
     ```
 
 2. **Load reference paths**
     - Convert the parameters for reference, index, dictionary and intervals into file objects.
 
 ??? tip "Load parameters into file objects"
-    - Use the function _file()_ to declare that the parameters are actually files 
+    - Use the function _file()_ to declare which parameters are required as files 
     ```groovy title="genomics.nf" linenums="16"
         anyFile = file(fileDeclaredInParameters)
     ```

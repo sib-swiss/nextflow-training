@@ -153,7 +153,7 @@ It is now time to execute your first workflow! Nextflow runs the workflow define
     By default, Nextflow:
 
     * Runs each process in an isolated directory under `work/`.
-    * Caches task results based on input hashes—if you run again with the same inputs, it may reuse cached outputs.
+    * Caches task results based on input hashes, thus if you run again with the same inputs, it may reuse cached outputs.
     * Uses `-resume` to continue a failed run without re-executing completed tasks.
     * To force re-execution of everything, remove the `work/` directory before running.
 

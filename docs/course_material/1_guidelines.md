@@ -2,7 +2,7 @@
 
 ## Course goal
 
-<p style='text-align: justify;'>This is course is designed in three practical stages. In the first stage, you will identify key components of the Nextflow dataflow paradigm using a basic pipeline whose purpose is to demonstrate how processes are connected. For the second stage, once you are able to establish how data is flowing, you will apply what you have learned in order to execute an RNA-seq pipeline. Finally, you'll <i>collect()</i> the knowledge of the two previous stages to develop a metagenomics pipeline. Optionally, you can wrap your own analysis workflows; otherwise, there will be a genomics pipeline for you to expand your skills.</p>
+<p style='text-align: justify;'>This is course is designed in three practical chapters. In the first chapter, you will identify key components of the Nextflow dataflow paradigm using a basic pipeline whose purpose is to demonstrate how processes are connected. For the second chapter, once you are able to establish how data is flowing, you will apply what you have learned in order to execute an RNA-seq pipeline. Finally, you'll <i>collect()</i> the knowledge of the two previous chapters to develop a metagenomics pipeline. Optionally, you can wrap your own analysis workflows; otherwise, there will be a genomics pipeline for you to expand your skills.</p>
 
 <p style='text-align: justify;'>By the end of the course, you will have constructed/understood potentially 3 Nextflow and functional workflows implemented in <b>Nextflow DSL2</b>, using common features such as processes, channels, modules and configuration profiles. You will also have gained experience running the workflow in a controlled environment, and you will be equipped with the necessary information to execute the pipelines on a High Performance Computing (HPC) environment.</p>
 
@@ -52,12 +52,6 @@ Each question provides a background explanation, a description of the task at ha
 ## Answers
 
 Do not hesitate to modify and overwrite your code from previous answers as difficulty is incremental. The questions are designed to incite you to build your answers upon the previous ones.
-
-!!! tip "Restarting from a clean workflow"
-    * If you feel that you drifted too far apart from the solution, you can always review the files provided in the solutions folder:
-    ```bash
-    cd /workspaces/nextflow-training/solutions/
-    ```
 
 If something is not clear at any point, please raise your hand and we will do our best to answer your questions! You can also check the [official Nextflow documentation](https://www.nextflow.io/docs/latest/index.html) for more information.
 
