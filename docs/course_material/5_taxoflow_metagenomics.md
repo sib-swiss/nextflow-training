@@ -8,6 +8,10 @@
 - Recognise how **custom scripts and tools** (RMarkdown reports) are integrated into a Nextflow workflow.
 - Enable and interpret a **native Nextflow execution report** to inspect resource usage and performance of the TaxoFlow pipeline.
 
+## Material
+
+[:fontawesome-solid-file-pdf: Download the presentation](../assets/pdf/part4.pdf){: .md-button }
+
 ## Overview of the TaxoFlow project
 
 Let's go to the directory first:
