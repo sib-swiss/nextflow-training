@@ -1,0 +1,1539 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../5_taxoflow_metagenomics/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/SIB_logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+    
+    
+      
+        <title>Develop a pipeline - Nextflow in Action Build Smarter, Faster, Reproducible Pipelines</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#genomics-variant-calling-pipeline-exercise" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+          <aside class="md-banner md-banner--warning">
+            <div class="md-banner__inner md-grid md-typeset">
+              
+  You're not viewing the latest version.
+  <a href="../../.."> 
+    <strong>Click here to go to latest.</strong>
+  </a>
+
+            </div>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
+          </aside>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Nextflow in Action Build Smarter, Faster, Reproducible Pipelines" class="md-header__button md-logo" aria-label="Nextflow in Action Build Smarter, Faster, Reproducible Pipelines" data-md-component="logo">
+      
+  <img src="../../assets/images/SIB_logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nextflow in Action Build Smarter, Faster, Reproducible Pipelines
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Develop a pipeline
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jeffe107/nextflow-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jeffe107/nextflow-training
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Nextflow in Action Build Smarter, Faster, Reproducible Pipelines" class="md-nav__button md-logo" aria-label="Nextflow in Action Build Smarter, Faster, Reproducible Pipelines" data-md-component="logo">
+      
+  <img src="../../assets/images/SIB_logo.svg" alt="logo">
+
+    </a>
+    Nextflow in Action Build Smarter, Faster, Reproducible Pipelines
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jeffe107/nextflow-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jeffe107/nextflow-training
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../precourse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Precourse preparations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course_schedule/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course schedule
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course material
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Course material
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_guidelines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General guidelines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_introduction_nextflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to Nextflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_hello_pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Making a more general-purpose Nextflow pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_rnaseq_executors_profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Controlling execution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_taxoflow_metagenomics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conditionals, scripts à la carte, report
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Develop a pipeline
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Develop a pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#genomics-variant-calling-pipeline-exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Genomics variant-calling pipeline (exercise)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning outcomes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scenario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-and-directory-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data and directory layout
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data and directory layout">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#starting-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Starting directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#samplesheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Samplesheet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reference-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-configuration-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 1 – Configuration file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-bam-indexing-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 2 – BAM indexing module
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-variant-calling-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 3 – Variant-calling module
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-workflow-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 4 – Workflow file
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 4 – Workflow file">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#module-inclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module inclusion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow logic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#published-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Published outputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-the-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test the pipeline
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#genomics-variant-calling-pipeline-exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Genomics variant-calling pipeline (exercise)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning outcomes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scenario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-and-directory-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data and directory layout
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data and directory layout">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#starting-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Starting directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#samplesheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Samplesheet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reference-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-configuration-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 1 – Configuration file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-bam-indexing-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 2 – BAM indexing module
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-variant-calling-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 3 – Variant-calling module
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-workflow-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 4 – Workflow file
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 4 – Workflow file">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#module-inclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module inclusion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow logic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#published-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Published outputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-the-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test the pipeline
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Develop a pipeline</h1>
+
+<h2 id="genomics-variant-calling-pipeline-exercise">Genomics variant-calling pipeline (exercise)</h2>
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<p><strong>After having completed this chapter you will be able to:</strong></p>
+<ul>
+<li>Implement a small genomics pipeline that indexes BAM files and calls variants.</li>
+<li>Organize the workflow into an entry script, process modules and a configuration file.</li>
+<li>Use a sample sheet and reference files to drive the pipeline.</li>
+<li>Produce per-sample VCF files and indexes starting from pre-aligned BAM files.</li>
+</ul>
+<h2 id="scenario">Scenario</h2>
+<h3 id="the-pipeline">The pipeline</h3>
+<p style='text-align: justify;'>Variant calling is a genomic analysis method that aims to identify variations in a genome sequence relative to a reference genome. Here we are going to use tools and methods designed for calling short germline variants, i.e. SNPs and indels, in whole-genome sequencing data. A full variant calling pipeline typically involves a lot of steps, including mapping to the reference (sometimes referred to as genome alignment) and variant filtering and prioritization. For simplicity, in this course we are going to focus on just the variant calling part.</p>
+
+<figure align="center">
+<p><img alt="backbone_rulegraph" src="../../assets/images/hello-gatk-1.svg" /></p>
+</figure>
+<p>You are given <strong>pre-aligned BAM files</strong> for a trio (mother, father, child) and a <strong>reference genome</strong>. Your task is to:</p>
+<ul>
+<li><strong>Index</strong> each BAM file.</li>
+<li><strong>Call variants</strong> on each indexed BAM using GATK HaplotypeCaller.</li>
+<li>Organize the outputs by type (BAMs and VCFs) in dedicated result folders.</li>
+</ul>
+<p>You will write:</p>
+<ul>
+<li>A workflow file (entry point).</li>
+<li>Two modules (one for BAM indexing, one for variant calling).</li>
+<li>A configuration file with default parameters and a convenient profile.</li>
+</ul>
+<p>The reference implementation can be found under <code>solutions/genomics-pipeline/</code>. Your goal is to recreate this behaviour as an exercise in the corresponding <code>exercises/</code> folder.</p>
+<h2 id="data-and-directory-layout">Data and directory layout</h2>
+<h3 id="starting-directory">Starting directory</h3>
+<p>Work in the <strong>exercise folder</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>exercises/genomics-pipeline
+</code></pre></div>
+<p>This is the project folder structure aiming at developing a modularized, reproducible and scalable pipeline:</p>
+<details class="abstract">
+<summary>These are the files in the directory</summary>
+<div class="highlight"><span class="filename">genomics-pipeline/</span><pre><span></span><code><span class="go">    genomics-pipeline</span>
+<span class="go">    ├── data</span>
+<span class="go">    │   ├── bam</span>
+<span class="go">    │   │   ├── reads_father.bam</span>
+<span class="go">    │   │   ├── reads_mother.bam</span>
+<span class="go">    │   │   └── reads_son.bam</span>
+<span class="go">    │   ├── ref</span>
+<span class="go">    │   │   ├── intervals.bed</span>
+<span class="go">    │   │   ├── ref.dict</span>
+<span class="go">    │   │   ├── ref.fasta</span>
+<span class="go">    │   │   └── ref.fasta.fai</span>
+<span class="go">    │   └── samplesheet.csv</span>
+<span class="go">    ├── genomics.nf</span>
+<span class="go">    ├── modules</span>
+<span class="go">    │   ├── gatk_haplotypecaller.nf</span>
+<span class="go">    │   └── samtools_index.nf</span>
+<span class="go">    └── nextflow.config</span>
+</code></pre></div>
+</details>
+<div class="admonition info">
+<p class="admonition-title">Nextflow files</p>
+<ul>
+<li>Remember that the nextflow files are scaffolded only, meaning that they have the structure but not the content (except for the Docker containers where the processes will be executed).</li>
+</ul>
+</div>
+<h3 id="samplesheet">Samplesheet</h3>
+<p>The file <code>data/samplesheet.csv</code> contains one BAM per line:</p>
+<div class="highlight"><span class="filename">data/samplesheet.csv</span><pre><span></span><code>sample_id,reads_bam
+NA12878,data/bam/reads_mother.bam
+NA12877,data/bam/reads_father.bam
+NA12882,data/bam/reads_son.bam
+</code></pre></div>
+<ul>
+<li><code>sample_id</code>: sample identifier.</li>
+<li><code>reads_bam</code>: path to the input BAM (relative to the project root).</li>
+</ul>
+<h3 id="reference-files">Reference files</h3>
+<p>In <code>data/ref/</code> you have:</p>
+<ul>
+<li><code>ref.fasta</code>: reference genome FASTA.</li>
+<li><code>ref.fasta.fai</code>: FASTA index.</li>
+<li><code>ref.dict</code>: sequence dictionary.</li>
+<li><code>intervals.bed</code>: list of genomic intervals (subset of the genome to analyse).</li>
+</ul>
+<h2 id="exercise-1-configuration-file">Exercise 1 – Configuration file</h2>
+<p>Use the <code>nextflow.config</code> file in <code>exercises/genomics-pipeline/</code> to create the following requirements:</p>
+<ul>
+<li><strong>Container engine</strong><ul>
+<li>Enable Docker globally.</li>
+</ul>
+</li>
+<li>
+<p><strong>Set the parameters</strong></p>
+<ul>
+<li><code>input</code></li>
+<li><code>reference</code></li>
+<li><code>reference_index</code></li>
+<li><code>reference_dict</code></li>
+<li><code>intervals</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Crate the profile <code>test</code></strong> that sets:</p>
+<ul>
+<li><code>input</code> to <code>samplesheet.csv</code>.</li>
+<li><code>reference</code> to <code>ref.fasta</code>.</li>
+<li><code>reference_index</code> to <code>ref.fasta.fai</code>.</li>
+<li><code>reference_dict</code> to <code>ref.dict</code>.</li>
+<li><code>intervals</code> to <code>intervals.bed</code>.</li>
+</ul>
+</li>
+</ul>
+<details class="tip">
+<summary>Paths</summary>
+<ul>
+<li>Remember that you need to consider the file locations. Refer to files with so that the paths work regardless of where the workflow is launched. You can use <code>${projectDir}</code> to set the current directory as <em>root</em> to launch the pipeline.</li>
+</ul>
+</details>
+<div class="admonition tip">
+<p class="admonition-title">You should be able to run the pipeline with:</p>
+<div class="highlight"><pre><span></span><code>nextflow<span class="w"> </span>run<span class="w"> </span>genomics.nf<span class="w"> </span>-profile<span class="w"> </span><span class="nb">test</span>
+</code></pre></div>
+</div>
+<h2 id="exercise-2-bam-indexing-module">Exercise 2 – BAM indexing module</h2>
+<p>Implement a module <code>modules/samtools_index.nf</code> that:</p>
+<ul>
+<li>Receives a BAM file as input.</li>
+<li>Runs <code>samtools index</code> to create the index (<code>.bai</code>).</li>
+</ul>
+<details class="tip">
+<summary>Example samtools command</summary>
+<p><div class="highlight"><pre><span></span><code>samtools<span class="w"> </span>index<span class="w"> </span><span class="s1">&#39;example.bam&#39;</span>
+</code></pre></div>
+  It creates the file <code>example.bam.bai</code></p>
+</details>
+<ul>
+<li>Emits both the original BAM and the index as outputs in a tuple.</li>
+</ul>
+<details class="tip">
+<summary>Tuple structure</summary>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">modules/samtools_index.nf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">    </span><span class="n">tuple</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="err">`</span><span class="n">example</span><span class="o">.</span><span class="na">bam</span><span class="err">`</span><span class="o">),</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="err">`</span><span class="n">example</span><span class="o">.</span><span class="na">bam</span><span class="o">.</span><span class="na">bai</span><span class="err">`</span><span class="o">)</span>
+</code></pre></div></td></tr></table></div>
+</details>
+<details class="success">
+<summary>Checklist</summary>
+<ul>
+<li>Does the process emit <strong>both</strong> the BAM and its index?</li>
+<li>Does the filename of the <code>.bai</code> <em>match</em> the BAM (e.g. <code>reads_mother.bam.bai</code>)?</li>
+</ul>
+</details>
+<h2 id="exercise-3-variant-calling-module">Exercise 3 – Variant-calling module</h2>
+<p>Implement a module <code>modules/gatk_haplotypecaller.nf</code> that:</p>
+<ul>
+<li>Receives:<ul>
+<li>A tuple with a BAM and its index.</li>
+<li>The reference FASTA, its index and dictionary.</li>
+<li>The intervals file.</li>
+</ul>
+</li>
+</ul>
+<details class="tip">
+<summary>Input structure</summary>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">modules/gatk_haplotypecaller.nf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">      </span><span class="n">tuple</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">example</span><span class="o">.</span><span class="na">bam</span><span class="o">),</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">example</span><span class="o">.</span><span class="na">bam</span><span class="o">.</span><span class="na">bai</span><span class="o">)</span>
+<span class="w">      </span><span class="n">example_ref</span><span class="o">.</span><span class="na">fasta</span>
+<span class="w">      </span><span class="n">example_ref</span><span class="o">.</span><span class="na">index</span>
+<span class="w">      </span><span class="n">example_ref</span><span class="o">.</span><span class="na">dict</span>
+<span class="w">      </span><span class="n">example_interval_list</span><span class="o">.</span><span class="na">bed</span>
+</code></pre></div></td></tr></table></div>
+</details>
+<ul>
+<li>Runs GATK HaplotypeCaller to call variants.</li>
+</ul>
+<details class="tip">
+<summary>Example GATK command</summary>
+<p><div class="highlight"><pre><span></span><code><span class="w">    </span>gatk<span class="w"> </span>HaplotypeCaller<span class="w"> </span>-R<span class="w"> </span>example_ref.fasta<span class="w"> </span>-I<span class="w"> </span>example.bam<span class="w"> </span>-O<span class="w"> </span>example.bam.vcf<span class="w"> </span>-L<span class="w"> </span>example_interval_list.bed
+</code></pre></div>
+  It creates the file <code>example.bam.vcf</code> and <code>example.bam.vcf.idx</code>. You can split long commands using backslash (\).</p>
+</details>
+<details class="info">
+<summary>Don&rsquo;t you notice something?</summary>
+<p>We don&rsquo;t need to specify the path to the index file; the tool will automatically look for it in the same directory, based on the established naming and co-location convention. The same applies to the reference genome&rsquo;s accessory files (index and sequence dictionary files, <em>.fai and </em>.dict).    </p>
+</details>
+<ul>
+<li>Emits a VCF file (<code>example.bam.vcf</code>) and its index (<code>example.bam.vcf.idx</code>).</li>
+</ul>
+<details class="tip">
+<summary>Output structure</summary>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">modules/gatk_haplotypecaller.nf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">18</span>
+<span class="normal">19</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">      </span><span class="n">example</span><span class="o">.</span><span class="na">bam</span><span class="o">.</span><span class="na">vcf</span><span class="w">        </span><span class="o">,</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">vcf</span>
+<span class="w">      </span><span class="n">example</span><span class="o">.</span><span class="na">bam</span><span class="o">.</span><span class="na">vcf</span><span class="o">.</span><span class="na">idx</span><span class="w">    </span><span class="o">,</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">idx</span>
+</code></pre></div></td></tr></table></div>
+</details>
+<details class="success">
+<summary>Checklist</summary>
+<ul>
+<li>Does each input BAM produce exactly one VCF and one VCF index?</li>
+<li>Are VCF filenames clearly linked to the BAM filenames?</li>
+</ul>
+</details>
+<h2 id="exercise-4-workflow-file">Exercise 4 – Workflow file</h2>
+<p>Populate the file <code>genomics.nf</code> as the entry point of the pipeline with the following behaviour.</p>
+<h3 id="module-inclusion">Module inclusion</h3>
+<p>At the top of <code>genomics.nf</code>, include the two modules:</p>
+<details class="tip">
+<summary>Importing modules</summary>
+<ul>
+<li>Remember where the modules are stored, relative to workflow file, what their names are, and what they contain.
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">genomics.nf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">      </span><span class="n">whatYouWantToInclude</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">nameOfTheProcess</span><span class="w">           </span><span class="o">}</span><span class="w">        </span><span class="n">from</span><span class="w"> </span><span class="s1">&#39;whereAreTheModules&#39;</span>
+</code></pre></div></td></tr></table></div></li>
+</ul>
+</details>
+<h3 id="workflow-logic">Workflow logic</h3>
+<p>In the <code>workflow</code> block:</p>
+<ol>
+<li><strong>Create the BAM channel</strong><ul>
+<li>Read <code>params.input</code> (CSV with header).</li>
+<li>For each row, extract the <code>reads_bam</code> field and convert it to a file object.</li>
+</ul>
+</li>
+</ol>
+<details class="tip">
+<summary>Read CSV</summary>
+<ul>
+<li>You need to create a channel using one of the channel factories, then apply the operator <em>splitCsv()</em>, and then use <em>map{}</em> to extract what you need from the CSV
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">genomics.nf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">    </span><span class="n">example_channel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">channelFactory</span><span class="o">(</span><span class="n">whereTheCsvIs</span><span class="o">)</span>
+<span class="w">        </span><span class="o">.</span><span class="na">splitCsv</span><span class="o">(</span><span class="n">DoesItHaveHeader</span><span class="o">)</span>
+<span class="w">        </span><span class="o">.</span><span class="na">map</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">closure</span><span class="w"> </span><span class="o">}</span>
+</code></pre></div></td></tr></table></div></li>
+</ul>
+</details>
+<ol start="2">
+<li><strong>Load reference paths</strong><ul>
+<li>Convert the parameters for reference, index, dictionary and intervals into file objects.</li>
+</ul>
+</li>
+</ol>
+<details class="tip">
+<summary>Load parameters into file objects</summary>
+<ul>
+<li>Use the function <em>file()</em> to declare which parameters are required as files 
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">genomics.nf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">    </span><span class="n">anyFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="o">(</span><span class="n">fileDeclaredInParameters</span><span class="o">)</span>
+</code></pre></div></td></tr></table></div></li>
+</ul>
+</details>
+<ol start="3">
+<li><strong>Index BAM files</strong><ul>
+<li>Run <code>SAMTOOLS_INDEX</code> on the BAM channel.</li>
+</ul>
+</li>
+</ol>
+<details class="tip">
+<summary>Declare the process</summary>
+<ul>
+<li>Remember that you have to use the name of the process and what the input(s) is/are. <strong>They must match with the input declaration in the module itself</strong>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">genomics.nf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">22</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">    </span><span class="n">PROCESS</span><span class="o">(</span><span class="n">input</span><span class="o">)</span>
+</code></pre></div></td></tr></table></div></li>
+</ul>
+</details>
+<ol start="4">
+<li><strong>Call variants</strong><ul>
+<li>Run <code>GATK_HAPLOTYPECALLER</code> using:<ul>
+<li>The output of <code>SAMTOOLS_INDEX</code>.</li>
+<li>The reference files.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<details class="tip">
+<summary>Declare the process</summary>
+<ul>
+<li><strong>This process has many inputs, the order must match with the order declared in the module.</strong>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">genomics.nf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">    </span><span class="n">GATK_HAPLOTYPECALLER</span><span class="o">(</span>
+<span class="w">      </span><span class="n">OutputFromAnotherProcess</span><span class="o">,</span>
+<span class="w">      </span><span class="n">file1</span><span class="o">,</span>
+<span class="w">      </span><span class="n">file2</span><span class="o">,</span>
+<span class="w">      </span><span class="n">file3</span><span class="o">,</span>
+<span class="w">      </span><span class="n">file4</span>
+<span class="o">)</span>
+</code></pre></div></td></tr></table></div></li>
+</ul>
+</details>
+<h3 id="published-outputs">Published outputs</h3>
+<p>Add a <code>publish</code> section in the <code>workflow</code> that:</p>
+<ul>
+<li>Assigns:<ul>
+<li><code>indexed_bam</code> to the output of <code>SAMTOOLS_INDEX</code>.</li>
+<li><code>vcf</code> and <code>vcf_idx</code> to the outputs of <code>GATK_HAPLOTYPECALLER</code>.</li>
+</ul>
+</li>
+</ul>
+<details class="tip">
+<summary>Publish declaration</summary>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">genomics.nf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">    </span><span class="n">indexed_bam</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OutputFromSamtoolsProcess</span>
+<span class="w">    </span><span class="n">vcf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VcfFileFromGATKProcess</span>
+<span class="w">    </span><span class="n">vcf_idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">indexFileFromGATKProcess</span>
+</code></pre></div></td></tr></table></div>
+</details>
+<p>Then add an <code>output</code> block that:</p>
+<ul>
+<li>Writes:<ul>
+<li>All indexed BAMs and <code>.bai</code> files under <code>results/bam/</code>.</li>
+<li>All VCFs and VCF indexes under <code>results/vcf/</code>.</li>
+</ul>
+</li>
+</ul>
+<details class="tip">
+<summary>Output block</summary>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">genomics.nf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">indexed_bam</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">whereToStoreBams</span>
+<span class="o">}</span>
+<span class="n">vcf</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">whereToStoreVCFs</span>
+<span class="o">}</span>
+<span class="n">vcf_idx</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">whereToStoreVCFIndeces</span>
+<span class="o">}</span>
+</code></pre></div></td></tr></table></div>
+</details>
+<p><strong>Question:</strong> Why are there only three declared outputs?</p>
+<details class="success">
+<summary>Output of SAMTOOLS_INDEX</summary>
+<p>Remember that the output of SAMTOOLS_INDEX is a tuple, and hence that channel carries both files <code>.bam</code> and <code>.bam.bai</code>.</p>
+</details>
+<h2 id="test-the-pipeline">Test the pipeline</h2>
+<div class="admonition success">
+<p class="admonition-title">Run and verify</p>
+<ul>
+<li>Run:
+  <div class="highlight"><pre><span></span><code>nextflow<span class="w"> </span>run<span class="w"> </span>genomics.nf<span class="w"> </span>-profile<span class="w"> </span><span class="nb">test</span>
+</code></pre></div></li>
+<li>Check:<ul>
+<li><code>results/bam/</code> contains three <code>.bam</code> files and three <code>.bai</code> files.</li>
+<li><code>results/vcf/</code> contains three <code>.vcf</code> files and three <code>.vcf.idx</code> files.</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../5_taxoflow_metagenomics/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Conditionals, scripts à la carte, report">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Conditionals, scripts à la carte, report
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2021-2026 SIB Swiss Institute of Bioinformatics - <a href="#__consent">Change cookie settings</a>
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our trainig material and whether users find what they're searching for. With your consent, you're helping us to make our training material better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="matomo" checked>
+      <span class="task-list-indicator"></span>
+      Matomo Analytics
+    </label>
+  </li>
+
+      
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["announce.dismiss", "content.code.copy", "navigation.top", "navigation.footer"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/consent.js"></script>
+      
+    
+  </body>
+</html>
