@@ -299,3 +299,8 @@ Then add an `output` block that:
     - Check:
         - `results/bam/` contains three `.bam` files and three `.bai` files.
         - `results/vcf/` contains three `.vcf` files and three `.vcf.idx` files.
+
+## Solution
+
+??? success "Solution"
+        You can find the solution to this exercise [here](https://github.com/jeffe107/nextflow-training/tree/main/solutions)
