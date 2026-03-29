@@ -1,6 +1,9 @@
 # Nextflow in Action: Build Smarter, Faster, Reproducible Pipelines
 
 ![Static Badge](https://img.shields.io/badge/release%20date-march%202025-%230DC09D)
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19311980.svg)](https://doi.org/10.5281/zenodo.19311980)
+
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC_BY--SA_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
 * Website is hosted at [https://sib-swiss.github.io/nextflow-training/](https://sib-swiss.github.io/nextflow-training/)
