@@ -42,8 +42,8 @@ copyright: >
   <a href="#__consent">Change cookie settings</a>
 
 # Repository
-repo_name: jeffe107/nextflow-training
-repo_url: https://github.com/jeffe107/nextflow-training
+repo_name: sib-swiss/nextflow-training
+repo_url: https://github.com/sib-swiss/nextflow-training
 
 markdown_extensions:
   - abbr
