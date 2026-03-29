@@ -3,9 +3,9 @@
 ![Static Badge](https://img.shields.io/badge/release%20date-march%202025-%230DC09D)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC_BY--SA_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
-* Website is hosted at [https://jeffe107.github.io/nextflow-training/](https://jeffe107.github.io/nextflow-training/)
+* Website is hosted at [https://sib-swiss.github.io/nextflow-training/](https://sib-swiss.github.io/nextflow-training/)
 
-* Please refer to [issues](https://github.com/jeffe107/nextflow-training/issues) for improvements/bugs for course material or the website
+* Please refer to [issues](https://github.com/sib-swiss/nextflow-training/issues) for improvements/bugs for course material or the website
 
 * Any contribution to this course material is highly appreciated :+1:. Please have a look at the [CONTRIBUTING.md](CONTRIBUTING.md) file to learn more on how to contribute
 
@@ -19,7 +19,7 @@ Once you have cloned the repo, you can host it on your local browser. The websit
 
 * Clone the repository:
 	```bash
-	git clone https://github.com/jeffe107/nextflow-training
+	git clone https://github.com/sib-swiss/nextflow-training
 	```
 
 * Install MkDocs:

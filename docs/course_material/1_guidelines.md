@@ -20,7 +20,7 @@ All the software needed in this workflow is either:
 
 Without further ado, you can start here:
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/jeffe107/nextflow-training?quickstart=1)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/sib-swiss/nextflow-training?quickstart=1)
 
 All information of this course is based on the [official Nextflow documentation](https://docs.seqera.io/nextflow/) and uses **Nextflow DSL2** syntax.
 

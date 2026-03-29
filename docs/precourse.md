@@ -18,7 +18,7 @@ You will be provided with a link to create the workspace in GitHub Codespaces au
 
 This is the link to GitHub Codespaces:
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/jeffe107/nextflow-training?quickstart=1)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/sib-swiss/nextflow-training?quickstart=1)
 
 !!! warning "Do not start working on it"
     We have limited resources with the free tier of GitHub Codespaces, so please do not start working or running thins through it. You just need to create it before the course.
@@ -49,7 +49,7 @@ sdk install java 17.0.10-tem
 curl -s https://get.nextflow.io | bash
 chmod +x nextflow
 export PATH=${PATH}:/project/workspace
-git clone https://github.com/jeffe107/nextflow-training
+git clone https://github.com/sib-swiss/nextflow-training
 cd nextflow-training
 ```
 
