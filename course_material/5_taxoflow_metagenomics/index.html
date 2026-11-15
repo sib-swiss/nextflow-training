@@ -992,7 +992,6 @@
 <h2 id="overview-of-the-taxoflow-project">Overview of the TaxoFlow project</h2>
 <p>Let&rsquo;s go to the directory first:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/workspaces/nextflow-training/exercises/TaxoFlow
-code<span class="w"> </span>.
 </code></pre></div>
 <details class="abstract">
 <summary>These are the files in the directory</summary>
@@ -1026,7 +1025,7 @@ wget<span class="w"> </span>--no-check-certificate<span class="w"> </span>--no-p
 tar<span class="w"> </span>-xvzf<span class="w"> </span>content
 rm<span class="w"> </span>-r<span class="w"> </span>content
 <span class="nb">cd</span><span class="w"> </span>-
-mkdir<span class="w"> </span>-p<span class="w"> </span>data/genome<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$_</span><span class="s2">&quot;</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span>data/TAIR10<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$_</span><span class="s2">&quot;</span>
 wget<span class="w"> </span>--no-check-certificate<span class="w"> </span>--no-proxy<span class="w"> </span><span class="s1">&#39;https://genome-idx.s3.amazonaws.com/bt/TAIR10.zip&#39;</span>
 unzip<span class="w"> </span>TAIR10.zip
 rm<span class="w"> </span>-r<span class="w"> </span>TAIR10.zip
@@ -1252,14 +1251,18 @@ rm<span class="w"> </span>-r<span class="w"> </span>TAIR10.zip
 <span class="normal">17</span>
 <span class="normal">18</span>
 <span class="normal">19</span>
-<span class="normal">20</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">    </span><span class="cm">/*</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">    </span><span class="cm">/*</span>
 <span class="cm">    * pipeline input parameters</span>
 <span class="cm">    */</span>
 
 <span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
 <span class="w">        </span><span class="n">reads</span><span class="w">                                 </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
 <span class="w">        </span><span class="n">outdir</span><span class="w">                                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${projectDir}/results&quot;</span>
-<span class="w">        </span><span class="n">bowtie2_index</span><span class="w">                         </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${projectDir}/data/genome/TAIR10/TAIR10&quot;</span>
+<span class="w">        </span><span class="n">bowtie2_index</span><span class="w">                         </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${projectDir}/data/TAIR10&quot;</span>
 <span class="w">        </span><span class="n">kraken2_db</span><span class="w">                            </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${projectDir}/data/krakendb&quot;</span>
 <span class="w">        </span><span class="n">sheet_csv</span><span class="w">                             </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
 <span class="w">        </span><span class="n">report</span><span class="w">                                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${projectDir}/bin/report.Rmd&quot;</span>
@@ -1272,6 +1275,10 @@ rm<span class="w"> </span>-r<span class="w"> </span>TAIR10.zip
 
 <span class="w">    </span><span class="c1">// Enable using docker as the container engine to run the pipeline</span>
 <span class="w">    </span><span class="n">docker</span><span class="o">.</span><span class="na">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+
+<span class="w">    </span><span class="c1">// Make hard copies of the output files</span>
+<span class="w">    </span><span class="n">workflow</span><span class="o">.</span><span class="na">output</span><span class="o">.</span><span class="na">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;copy&#39;</span>
+<span class="w">    </span><span class="n">outputDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="o">.</span><span class="na">outdir</span>
 </code></pre></div></td></tr></table></div>
 </details>
 <h2 id="conditional-execution-with-if-statements">Conditional execution with <code>if</code> statements</h2>
@@ -1404,7 +1411,7 @@ The <code>else</code> statement is not always required.</p>
 <span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
 <span class="w">        </span><span class="n">reads</span><span class="w">                                 </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
 <span class="w">        </span><span class="n">outdir</span><span class="w">                                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${projectDir}/results&quot;</span>
-<span class="w">        </span><span class="n">bowtie2_index</span><span class="w">                         </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${projectDir}/data/genome/TAIR10/TAIR10&quot;</span>
+<span class="w">        </span><span class="n">bowtie2_index</span><span class="w">                         </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${projectDir}/data/TAIR10&quot;</span>
 <span class="w">        </span><span class="n">kraken2_db</span><span class="w">                            </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${projectDir}/data/krakendb&quot;</span>
 <span class="w">        </span><span class="n">sheet_csv</span><span class="w">                             </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
 <span class="w">        </span><span class="n">report</span><span class="w">                                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${projectDir}/bin/report.Rmd&quot;</span>
